@@ -54,5 +54,24 @@ async function decorate(block) {
 }
 
 // Call the function (you might want to call this function on window load or on document DOMContentLoaded depending on your setup)
-decorate(document.querySelector('.your-block-class')); // Replace '.your-block-class' with the actual class or id of your block element.
+decorate(document.querySelector('.your-block-class')); 
+
+// Replace '.your-block-class' with the actual class or id of your block element.
+
+export default function decorate(block) {
+  /* change to ul, li */
+  const ul = document.createElement('ul');
+  [...block.children].forEach((row) => {
+    const li = document.createElement('li');
+    while (row.firstElementChild) li.append(row.firstElementChild);
+    [...li.children].forEach((div) => {
+      if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-card-image';
+      else div.className = 'cards-card-body';
+    });
+    ul.append(li);
+  });
+  ul.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])));
+  block.textContent = '';
+  block.append(ul);
+}
 
