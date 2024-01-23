@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-onst jsonData = [
+const jsonData = [
   {
     imageUrl: "http://example.com/image1.jpg",
     imageAlt: "Image 1 Description",
