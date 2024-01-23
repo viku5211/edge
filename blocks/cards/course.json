@@ -1,1 +1,55 @@
+{
+  "courses": [
+    {
+      "name": "Introduction to Data Science",
+      "description": "This course provides a comprehensive introduction to data science, covering key concepts in statistics, machine learning, and data visualization.",
+      "image": "introduction-to-data-science.jpg"
+    },
+    {
+      "name": "Advanced Web Development",
+      "description": "Explore advanced topics in web development, including the latest front-end and back-end technologies, frameworks, and best practices.",
+      "image": "advanced-web-development.jpg"
+    },
+    {
+      "name": "Digital Marketing Essentials",
+      "description": "Learn the fundamentals of digital marketing, including SEO, social media marketing, email marketing, and digital advertising.",
+      "image": "digital-marketing-essentials.jpg"
+    },
+    {
+      "name": "Graphic Design for Beginners",
+      "description": "An introductory course for aspiring graphic designers. Learn about design principles, color theory, typography, and popular design tools.",
+      "image": "graphic-design-for-beginners.jpg"
+    },
+    {
+      "name": "Cybersecurity Fundamentals",
+      "description": "Understand the basics of cybersecurity. Learn about common threats, vulnerabilities, and the latest techniques to protect data and systems.",
+      "image": "cybersecurity-fundamentals.jpg"
+    },
+    {
+      "name": "Project Management Professional",
+      "description": "Prepare for the PMP certification with this comprehensive course covering project management principles, methodologies, and best practices.",
+      "image": "project-management-professional.jpg"
+    },
+    {
+      "name": "Introduction to Machine Learning",
+      "description": "Dive into the world of machine learning. Learn about different algorithms, data preprocessing, model evaluation, and real-world applications.",
+      "image": "introduction-to-machine-learning.jpg"
+    },
+    {
+      "name": "Business Analytics with Excel",
+      "description": "Master Excel for business analytics. Learn how to use advanced formulas, pivot tables, and visualizations to analyze business data.",
+      "image": "business-analytics-with-excel.jpg"
+    },
+    {
+      "name": "Creative Writing Workshop",
+      "description": "Unlock your creativity with this workshop on creative writing. Learn techniques for poetry, fiction, non-fiction, and scriptwriting.",
+      "image": "creative-writing-workshop.jpg"
+    },
+    {
+      "name": "Environmental Science and Sustainability",
+      "description": "Explore the challenges of environmental science and sustainability. Study ecosystems, biodiversity, conservation, and sustainable development.",
+      "image": "environmental-science-and-sustainability.jpg"
+    }
+  ]
+}
 
