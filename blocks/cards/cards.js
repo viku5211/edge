@@ -1,18 +1,44 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-export default function decorate(block) {
-  /* change to ul, li */
+onst jsonData = [
+  {
+    imageUrl: "http://example.com/image1.jpg",
+    imageAlt: "Image 1 Description",
+    content: "Content for card 1"
+  },
+  {
+    imageUrl: "http://example.com/image2.jpg",
+    imageAlt: "Image 2 Description",
+    content: "Content for card 2"
+  }
+  // ... add more objects for more items
+];
+
+function decorate(block, data) {
   const ul = document.createElement('ul');
-  [...block.children].forEach((row) => {
+  
+  // Iterate over JSON data to create list items
+  data.forEach((itemData) => {
     const li = document.createElement('li');
-    while (row.firstElementChild) li.append(row.firstElementChild);
-    [...li.children].forEach((div) => {
-      if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-card-image';
-      else div.className = 'cards-card-body';
-    });
+    
+    // Create and append the image container
+    const picture = createOptimizedPicture(itemData.imageUrl, itemData.imageAlt, false, [{ width: '750' }]);
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'cards-card-image';
+    imageContainer.append(picture);
+    li.append(imageContainer);
+    
+    // Create and append the content container
+    const contentContainer = document.createElement('div');
+    contentContainer.className = 'cards-card-body';
+    contentContainer.textContent = itemData.content; // assuming 'content' is a text. If it's HTML, use innerHTML instead.
+    li.append(contentContainer);
+    
+    // Append the list item to the list
     ul.append(li);
   });
-  ul.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])));
+  
+  // Clear the block and append the new content
   block.textContent = '';
   block.append(ul);
 }
