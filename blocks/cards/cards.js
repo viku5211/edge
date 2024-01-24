@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-const getData = () => {
+const getData = (block) => {
      var content = '';
     var options = {
       method: "GET",
@@ -14,8 +14,6 @@ const getData = () => {
       options
     ).then((response) => {
       response.json().then((data) => {
-         
-          res = data;
           if(data.data){
 data.data.map(function(item){
     if(item.attributes.imageUrl){
@@ -24,6 +22,8 @@ data.data.map(function(item){
     
 });
               console.log(content);
+               block.textContent = '';
+  block.append(content);
               return content;
           }
         
@@ -33,22 +33,22 @@ data.data.map(function(item){
   };
   
 export default function decorate(block) {
-  var courses = getData();
+  var courses = getData(block);
     console.log("ssss aaAaAAaaA", courses);
   /* change to ul, li */
-  console.log("test",block);
-  const ul = document.createElement('ul');
-  [...block.children].forEach((row) => {
-    const li = document.createElement('li');
-    while (row.firstElementChild) li.append(row.firstElementChild);
-    [...li.children].forEach((div) => {
-      if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-card-image';
-      else div.className = 'cards-card-body';
-    });
-    ul.append(li);
-  });
-  ul.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])));
-  block.textContent = '';
-  block.append(ul);
-    console.log("test1",block);
+  // console.log("test",block);
+  // const ul = document.createElement('ul');
+  // [...block.children].forEach((row) => {
+  //   const li = document.createElement('li');
+  //   while (row.firstElementChild) li.append(row.firstElementChild);
+  //   [...li.children].forEach((div) => {
+  //     if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-card-image';
+  //     else div.className = 'cards-card-body';
+  //   });
+  //   ul.append(li);
+  // });
+  // ul.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])));
+  // block.textContent = '';
+  // block.append(ul);
+  //   console.log("test1",block);
 }
