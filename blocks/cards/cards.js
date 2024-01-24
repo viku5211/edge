@@ -22,7 +22,7 @@ data.data.map(function(item){
     
 });
               console.log(content);
-               var doc = new DOMParser().parseFromString(content, "text/xml");
+               var doc = new DOMParser().parseFromString('<ul>'+content+'</ul>', "text/xml");
                block.textContent = '';
   block.append(doc.documentElement);
               return content;
