@@ -19,7 +19,7 @@ const getData = () => {
           if(data.data){
 data.data.map(function(item){
     if(item.attributes.imageUrl){
-        content =content+ '<li><div class="cards-card-image"><picture><source type="image/webp" srcset={item.attributes.imageUrl}><img loading="lazy" alt="An iceberg" src={item.attributes.imageUrl}></picture></div><div class="cards-card-body"><p><strong>Content at scale</strong></p><p>AEM allows you to publish more content in shorter time with smaller teams</p><p>https://github.com/viku5211/edge/blob/main/blocks/cards/course.json</p></div></li>';
+        content =content+ '<li><div class="cards-card-image"><picture><source type="image/webp" srcset="+item.attributes.imageUrl+"><img loading="lazy" alt="An iceberg" src={item.attributes.imageUrl}></picture></div><div class="cards-card-body"><p><strong>Content at scale</strong></p><p>AEM allows you to publish more content in shorter time with smaller teams</p><p>https://github.com/viku5211/edge/blob/main/blocks/cards/course.json</p></div></li>';
     }
     
 });
