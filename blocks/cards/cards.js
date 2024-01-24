@@ -1,6 +1,24 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
+const getData = () => {
+    var options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer 302007b37f939016dc2ecffa995fd97f`,
+      }
+    };
 
+    fetch("https://learningmanager.adobe.com/primeapi/v2/learningObjects?page[limit]=10&filter.loTypes=course&sort=name&filter.ignoreEnhancedLP=true",
+      options
+    ).then((response) => {
+      response.json().then((data) => {
+        console.log("ssss aaAaAAaaA", data);
+      });
+    });
+  };
+  
 export default function decorate(block) {
+  getData();
   /* change to ul, li */
   console.log("test",block);
   const ul = document.createElement('ul');
