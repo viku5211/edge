@@ -39,6 +39,7 @@ data.data.map(function(item){
   };
   
 export default function decorate(block) {
+     console.log("ssss aaAaAAaaA", block);
   // var courses = getData(block);
   //   console.log("ssss aaAaAAaaA", block);
   // /* change to ul, li */
