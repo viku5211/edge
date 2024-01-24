@@ -26,8 +26,9 @@ data.data.map(function(item){
 });
               
                var newcontent = '<ul>'+content+'</ul>';
-               console.log(newcontent);
+               
                var doc = new DOMParser().parseFromString(newcontent, "text/xml");
+               console.log('rendred ',doc.documentElement);
                block.textContent = '';
   block.append(doc.documentElement);
               return content;
@@ -40,7 +41,7 @@ data.data.map(function(item){
   
 export default function decorate(block) {
   var courses = getData(block);
-    console.log("ssss aaAaAAaaA", courses);
+    console.log("ssss aaAaAAaaA", block);
   /* change to ul, li */
   // console.log("test",block);
   const ul = document.createElement('ul');
