@@ -22,8 +22,9 @@ data.data.map(function(item){
     
 });
               console.log(content);
+               var doc = new DOMParser().parseFromString(content, "text/xml");
                block.textContent = '';
-  block.append(content);
+  block.append(doc);
               return content;
           }
         
