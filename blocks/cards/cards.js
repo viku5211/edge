@@ -39,7 +39,7 @@ data.data.map(function(item){
   };
   
 export default function decorate(block) {
-  var courses = getData(block);
+ // var courses = getData(block);
     console.log("ssss aaAaAAaaA", block);
   /* change to ul, li */
   // console.log("test",block);
