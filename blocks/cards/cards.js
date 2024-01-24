@@ -1,4 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import { useEffect, useState } from "react";
 const getData = () => {
     var options = {
       method: "GET",
