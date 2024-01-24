@@ -18,7 +18,7 @@ const getData = (block) => {
 data.data.map(function(item){
     if(item.attributes.imageUrl){
          
-         content =content+ '<li><div class="cards-card-image"><picture><source type="image/webp" srcset="'+item.attributes.imageUrl+'"><img loading="lazy" alt="An iceberg" src="'+item.attributes.imageUrl+'"></picture></div><div class="cards-card-body"><p><strong>"'+item.attributes.localizedMetadata[0].name+'"</strong></p><p>"'+item.attributes.localizedMetadata[0].overview+'"</p></div></li>';
+         content =content+ '<li><div class="cards-card-image"><picture><source type="image/webp" srcset="'+item.attributes.imageUrl+'"></source><img loading="lazy" alt="An iceberg" src="'+item.attributes.imageUrl+'"></img></picture></div><div class="cards-card-body"><p><strong>"'+item.attributes.localizedMetadata[0].name+'"</strong></p><p>"'+item.attributes.localizedMetadata[0].overview+'"</p></div></li>';
        //  content =content+ '<li><div class="cards-card-image"><picture><source type="image/webp" srcset="'+item.attributes.imageUrl+'"><img alt="An iceberg" src="'+item.attributes.imageUrl+'" /></picture></div><div class="cards-card-body"><p><strong>"'+item.attributes.localizedMetadata[0].name+'"</strong></p><p>"'+item.attributes.localizedMetadata[0].overview+'"</p></div></li>';
     }
     
