@@ -9,7 +9,6 @@ const getData = (block) => {
         Authorization: `Bearer 302007b37f939016dc2ecffa995fd97f`,
       }
     };
-
     fetch("https://learningmanager.adobe.com/primeapi/v2/learningObjects?page[limit]=10&filter.loTypes=course&sort=name&filter.ignoreEnhancedLP=true",
       options
     ).then((response) => {
