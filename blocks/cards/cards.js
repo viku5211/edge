@@ -1,6 +1,7 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { useEffect, useState } from "react";
+
 const getData = () => {
+    var res= []
     var options = {
       method: "GET",
       headers: {
@@ -13,15 +14,15 @@ const getData = () => {
       options
     ).then((response) => {
       response.json().then((data) => {
-          setCourses(data);
+          res = data;
         
       });
     });
+    return res;
   };
   
 export default function decorate(block) {
-    const [courses, setCourses] = useState([]);
-  getData();
+  var courses = getData();
     console.log("ssss aaAaAAaaA", courses);
   /* change to ul, li */
   console.log("test",block);
