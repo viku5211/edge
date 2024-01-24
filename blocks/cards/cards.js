@@ -1,7 +1,7 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 const getData = () => {
-    var res= []
+     var content = '';
     var options = {
       method: "GET",
       headers: {
@@ -14,7 +14,7 @@ const getData = () => {
       options
     ).then((response) => {
       response.json().then((data) => {
-          var content = '';
+         
           res = data;
           if(data.data){
 data.data.map(function(item){
@@ -29,7 +29,7 @@ data.data.map(function(item){
         
       });
     });
-    return res;
+    
   };
   
 export default function decorate(block) {
