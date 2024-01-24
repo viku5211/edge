@@ -30,8 +30,8 @@ export async function loadFragment(path) {
           elem[attr] = new URL(elem.getAttribute(attr), new URL(path, window.location)).href;
         });
       };
-      // resetAttributeBase('img', 'src');
-      // resetAttributeBase('source', 'srcset');
+      resetAttributeBase('img', 'src');
+      resetAttributeBase('source', 'srcset');
 
       decorateMain(main);
       await loadBlocks(main);
