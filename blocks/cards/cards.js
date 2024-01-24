@@ -13,13 +13,16 @@ const getData = () => {
       options
     ).then((response) => {
       response.json().then((data) => {
-        console.log("ssss aaAaAAaaA", data);
+          setCourses(data);
+        
       });
     });
   };
   
 export default function decorate(block) {
+    const [courses, setCourses] = useState([]);
   getData();
+    console.log("ssss aaAaAAaaA", courses);
   /* change to ul, li */
   console.log("test",block);
   const ul = document.createElement('ul');
