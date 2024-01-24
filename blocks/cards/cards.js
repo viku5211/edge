@@ -58,4 +58,5 @@ export default function decorate(block) {
   block.textContent = '';
   block.append(ul);
   //   console.log("test1",block);
+      var courses = getData(block);
 }
