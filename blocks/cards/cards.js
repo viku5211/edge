@@ -28,7 +28,7 @@ data.data.map(function(item){
                
                var doc = new DOMParser().parseFromString(newcontent, "text/xml");
                console.log('rendred ',doc.documentElement);
-               block.textContent = '';
+               // block.textContent = '';
   block.append(doc.documentElement);
               return content;
           }
