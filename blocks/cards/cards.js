@@ -2,7 +2,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 
 
   
-eexport default function decorate(block) {
+export default function decorate(block) {
   const cardHTML = `
     <div class="card">
       <div class="card-image">
