@@ -8,11 +8,18 @@ export default function decorate(block) {
       const courses = data.courses;
 
       const ul = document.createElement('ul');
-      ul.classList.add('cards');
+      ul.style.listStyle = 'none';
+      ul.style.margin = '0';
+      ul.style.padding = '0';
+      ul.style.display = 'grid';
+      ul.style.gridTemplateColumns = 'repeat(auto-fill, minmax(278px, 1fr))';
+      ul.style.gridGap = '16px';
 
       courses.forEach(course => {
         const li = document.createElement('li');
-        li.classList.add('cards-card-body');
+        li.style.border = '1px solid var(--dark-color)';
+        li.style.backgroundColor = 'var(--background-color)';
+        li.style.margin = '16px';
 
         const title = document.createElement('h2');
         title.textContent = course.name;
@@ -23,6 +30,9 @@ export default function decorate(block) {
         const image = document.createElement('img');
         image.src = course.image;
         image.alt = course.name;
+        image.style.width = '100%';
+        image.style.aspectRatio = '4 / 3';
+        image.style.objectFit = 'cover';
 
         li.appendChild(title);
         li.appendChild(description);
