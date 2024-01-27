@@ -1,36 +1,38 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
-
 export default function decorate(block) {
-  const ul = document.createElement('ul');
-  ul.classList.add('cards');
+  // Make an HTTP request to fetch the JSON data
+  fetch('https://raw.githubusercontent.com/viku5211/edge/main/blocks/cards/course.json')
+    .then(response => response.json())
+    .then(data => {
+      const courses = data.courses;
 
-  [...block.children].forEach((row) => {
-    const li = document.createElement('li');
-    li.classList.add('cards-card-body');
+      const ul = document.createElement('ul');
+      ul.classList.add('cards');
 
-    while (row.firstElementChild) {
-      li.appendChild(row.firstElementChild);
-    }
+      courses.forEach(course => {
+        const li = document.createElement('li');
+        li.classList.add('cards-card-body');
 
-    ul.appendChild(li);
-  });
+        const title = document.createElement('h2');
+        title.textContent = course.name;
 
-  ul.querySelectorAll('img').forEach((img) => {
-    const picture = document.createElement('picture');
-    const source = document.createElement('source');
-    source.setAttribute('srcset', img.src);
-    source.setAttribute('media', '(min-width: 750px)');
-    const image = document.createElement('img');
-    image.setAttribute('src', img.src);
-    image.setAttribute('alt', img.alt);
+        const description = document.createElement('p');
+        description.textContent = course.description;
 
-    picture.appendChild(source);
-    picture.appendChild(image);
+        const image = document.createElement('img');
+        image.src = course.image;
+        image.alt = course.name;
 
-    img.closest('picture').replaceWith(picture);
-  });
+        li.appendChild(title);
+        li.appendChild(description);
+        li.appendChild(image);
 
-  block.textContent = '';
-  block.appendChild(ul);
+        ul.appendChild(li);
+      });
+
+      block.textContent = '';
+      block.appendChild(ul);
+    })
+    .catch(error => console.error(error));
 }
