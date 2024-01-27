@@ -3,7 +3,7 @@
     {
       "name": "Introduction to Data Science",
       "description": "This course provides a comprehensive introduction to data science, covering key concepts in statistics, machine learning, and data visualization.",
-      "image": "introduction-to-data-science.jpg"
+      "image": "http://localhost:8888/DS.png"
     },
     {
       "name": "Advanced Web Development",
