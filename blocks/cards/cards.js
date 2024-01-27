@@ -4,11 +4,11 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
   
 export default function decorate(block) {
   const cardHTML = `
-    <div class="card">
-      <div class="card-image">
+    <div class="cards">
+      <div class="cards-image">
         <img src="image_url_here" alt="Image Alt Text">
       </div>
-      <div class="card-body">
+      <div class="cards-body">
         <h2>Title</h2>
         <p>Description</p>
       </div>
