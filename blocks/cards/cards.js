@@ -60,3 +60,30 @@ export default function decorate(block) {
   //   console.log("test1",block);
       var courses = getData(block);
 }
+
+
+// Assuming you have a JSON file with data
+const jsonData = {
+  "title": "New Title",
+  "content": "New Content"
+};
+
+// Make an HTTP request to fetch the HTML of the page
+fetch('your_page_url_here')
+  .then(response => response.text())
+  .then(html => {
+    // Parse the HTML string into a DOM object
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    // Replace specific elements in the DOM with data from the JSON
+    doc.querySelector('title').textContent = jsonData.title;
+    doc.querySelector('#content').textContent = jsonData.content;
+
+    // Serialize the modified DOM back to HTML
+    const modifiedHtml = new XMLSerializer().serializeToString(doc);
+
+    // Now you can use 'modifiedHtml' as the updated HTML
+    console.log(modifiedHtml);
+  })
+  .catch(error => console.error(error));
