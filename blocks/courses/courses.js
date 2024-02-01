@@ -34,7 +34,7 @@ export default function decorate(block) {
   };
 
   fetch(
-    "https://captivateprime.adobe.com/primeapi/v2/learningObjects?page[limit]=10&filter.loTypes=course&sort=name&filter.ignoreEnhancedLP=true",
+    "https://learningmanager.adobe.com/primeapi/v2/learningObjects?page[limit]=10&filter.loTypes=course&filter.learnerState=enrolled&sort=name&filter.ignoreEnhancedLP=true",
     requestOptions
   )
     .then((response) => response.json())
