@@ -1,191 +1,159 @@
-.catalog .carousel_main {
-  max-width: 100rem;
-}
-.carousel_main {
-  max-width: 100rem;
-  height: 35rem;
-  margin: 0 auto;
-  position: relative;
-  overflow-x: hidden;
-}
 
-.catalog-container {
-  padding: 64px 32px;
-}
-
-.slideapi {
-  position: absolute;
-  top: 0;
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  /* THIS creates the animation! */
-  transition: transform 1s;
-}
-.slider__btn {
-  position: absolute;
-  top: 50%;
-  z-index: 10;
-  border: none;
-  background: rgba(255, 255, 255, 0.7);
-  font-family: inherit;
-  color: #333;
-  border-radius: 50%;
-  height: 5.5rem;
-  width: 5.5rem;
-  font-size: 3.25rem;
-  cursor: pointer;
-}
-
-.slider__btn--left {
-  left: 6%;
-  transform: translate(-76%, -118%);
-}
-
-.slider__btn--right {
-  right: 6%;
-  transform: translate(50%, -118%);
-}
-.slideapi img {
-  /* Only for images that have different size than slide */
-  width: 1200px;
-  height: 500px;
-}
-button {
-  padding: 0px 16px;
-  margin: 0px;
-}
-.slideapi > div {
-  position: relative;
-}
-.img-txt {
-  position: absolute;
-  font-size: 37px;
-  font-weight: 1000;
-  font-style: unset;
-  bottom: 50px;
-  left: 5%;
-  right: 50px;
-  background: #000;
-  color: #fff;
-  padding: 20px;
-  width: 85%;
-  border-radius: 50px;
-  filter: brightness(80%);
-  text-align: center;
-}
+import { getCookie, getLOData, getLOEnrollmentData, enrollUser, renderMarkupCarosuel, renderMarkupList, pagination } from '../../scripts/libs.js';
+import { configALM } from "../../config.js"
+var url = new URL(document.URL);
+var lo_id = url.searchParams.get("lo");
+console.log(lo_id, 'main url');
 
 
+export default function decorate(block) {
+  // [...block.children].forEach((row) => {
+  //   row.className = "slide";
+  // });
+  
 
-/* cards */
-.card-item{
-  overflow: hidden;
-  border: 1px solid grey;
-  border-radius: 10px;
-}
-.catalog > ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(278px, 1fr));
-  grid-gap: 16px;
-}
+  getLOData(lo_id).then(response => {
+    getLOEnrollmentData(lo_id).then(enrollRes => {
+      console.log('cataloge data ', enrollRes)
+      
+      var isEnroll = (enrollRes && enrollRes?.included && enrollRes?.included[0]?.attributes && enrollRes?.included[0]?.attributes?.state) ? true : false;
+      
 
+    const LoInsarray = response.included.filter((x) => x.type === "learningObjectInstance" && x.attributes.isDefault);
+    var  rightColMarkup = rightCol(enrollRes,response.data.id,isEnroll,LoInsarray[0].id);
 
+    const copy1 = response.included.filter((x) => x.type === "learningObjectResource");
+    const loResource = copy1.filter((x) => {
+      return LoInsarray[0].relationships.loResources.data.some((f) => {
+        return f.id === x.id;
+      });
+    });
+    const resid = LoInsarray[0].relationships.loResources.data.map((el) => el.id + "_resource");
+    const rescopy1 = response.included.filter((x) => x.type === "resource");
+    const resource = rescopy1.filter((x) => {
+      return (
+        (x.attributes.contentType !== "Classroom" &&
+          x.attributes.contentType !== "Virtual Classroom") ||
+        resid.includes(x.id)
+      );
+    });
+    console.log('main resouce', resource)
 
-.catalog > ul > li {
-  border: 1px solid var(--dark-color);
-  background-color: var(--background-color);
-}
+    const parentEl = document.querySelector('.lopage');
+    const bannerMarkup = banner(response);
+    const modulesMarkup = modules(resource, response.data.id,isEnroll,LoInsarray[0].id);
+    
+    
+    const courseTabs = '<div class="mt-3"><ul class="nav nav-tabs" id="courseTab"><li class="nav-item"><button class="nav-link active"  data-bs-toggle="tab" data-bs-target="#moduleTab" type="button">Modules</button></li><li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#overviewTab" type="button">Overview</button></li></ul><div class="tab-content" id="courseTabContent"><div class="tab-pane fade show active pt-4" id="moduleTab">' + modulesMarkup + '</div><div class="tab-pane fade pt-4" id="overviewTab">' + response?.data?.attributes?.localizedMetadata[0].description + '</div></div></div>'
 
-.catalog .cards-card-body {
-  margin: 16px;
-}
-
-.catalog .cards-card-image {
-  line-height: 0;
-}
-
-.catalog .cards-card-body > *:first-child {
-  margin-top: 0;
-}
-
-.catalog > ul > li img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
-.slideapi img{
-  filter: brightness(80%);
-}
-/* list */
-.list_catalog ul{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: block;
-}
-.list_catalog > ul > li {
-  padding: 20px;
-
-}
-.list_catalog li {
-  display: flex;
-  margin-bottom: 20px;
-}
-.list_catalog .item .item-image img{
-  width: 250px;
-  margin-right: 20px;
-}
-.list_catalog .item .item-body{
-  flex: 1;
-  text-align: left;
-}
-
-.list_catalog .item-title {
-  font-size: 20px;
-  line-height: 1.2;
-  font-weight: 700;
-  margin-top: 0;
-}
-
-.list_catalog .item-text {
-  margin-top: 0;
-  font-size: 16px;
-  color: rgb(40, 60, 96);
-  line-height: 1.4;
-  overflow: hidden;
-   display: -webkit-box;
-   -webkit-line-clamp: 4; /* number of lines to show */
-           line-clamp: 4; 
-   -webkit-box-orient: vertical;
-}
-
-.list_catalog li,.list_catalog p {
-line-height: 200%
-}
-
-@media (min-width: 900px) {
-  .list_catalog {
- max-width: 600px;
-}
-}
-@media (min-width: 1200px) {
-  .list_catalog {
-  max-width: 1140px;
-}
+    parentEl.insertAdjacentHTML("afterbegin", bannerMarkup + '<div class="container"><div class="row"><div class="col-9">' + courseTabs + '</div><div class="col-3">' + rightColMarkup + '</div></div></div>');
+    handleContinueClick();
+  });
+  });
 
 }
 
-.list_catalog > div > div > :first-child {
-margin-top: 0;
+function banner(resp) {
+  var banner = resp?.data?.attributes?.bannerUrl;
+  if (banner) {
+    return '<div class="lo_cover" style="background-image: url(&quot;' + banner + '&quot;);"><h2>' + resp?.data?.attributes?.localizedMetadata[0].name + '</h2><p>' + resp?.data?.attributes?.enrollmentType + '</p></div>'
+  } else {
+    return '<div class="lo_cover"><h2>' + resp?.data?.attributes?.localizedMetadata[0].name + '</h2><p class="badge">' + resp?.data?.attributes?.enrollmentType + '</p></div>'
+  }
+
 }
 
-.list_catalog > div > div > :last-child {
-margin-bottom: 0;
+function modules(resp, loId,isEnroll,instance) {
+  var content = '';
+  var moduleItem = '';
+  resp.map(function (val, ind) {
+    if (val.attributes.contentType === "Classroom") {
+      moduleItem = moduleItem + '<li instance="' + instance + '" enroll="'+isEnroll+'" loid="' + loId + '" module="' + val.id + '" class="handlelo"><img src="../../icons/play-circle-fill.svg" /><div class=""><h2>' + val.attributes.name + '</h2><p><span class="float-start">' + val.attributes.contentType + '</span><span  class="float-end">' + getTime(val.attributes.desiredDuration) + '<span></p></div></li>';
+      moduleItem = (resp.length <= ind) ? moduleItem + '<hr />' : moduleItem;
+    } else if (val.attributes.contentType === "Virtual Classroom") {
+      moduleItem = moduleItem + '<li instance="' + instance + '" enroll="'+isEnroll+'" loid="' + loId + '" module="' + val.id + '" class="handlelo"><img src="../../icons/play-circle-fill.svg" /><div class=""><h2>' + val.attributes.name + '</h2><p><span class="float-start">' + val.attributes.contentType + '</span><span  class="float-end">' + getTime(val.attributes.desiredDuration) + '<span></p></div></li>';
+      moduleItem = (resp.length <= ind) ? moduleItem + '<hr />' : moduleItem;
+    } else {
+      moduleItem = moduleItem + '<li instance="' + instance + '" enroll="'+isEnroll+'" loid="' + loId + '" module="' + val.id + '" class="handlelo"><img src="../../icons/play-circle-fill.svg" /><div class=""><h2>' + val.attributes.name + '</h2><p><span class="float-start">' + val.attributes.contentType + '</span><span  class="float-end">' + getTime(val.attributes.desiredDuration) + '<span></p></div></li>';
+      moduleItem = (resp.length <= ind) ? moduleItem + '<hr />' : moduleItem;
+      console.log('mod  ', moduleItem)
+    }
+  })
+  content = '<ul class="main_modules mb-5 card p-2 shadow-sm">' + moduleItem + '</ul>';
+  return content;
 }
+function rightCol(resp, loId,isEnroll,instance) {
+  var content = '';
+  console.log('sasasas ',getLabel(resp));
+  content = '<div class="mt-4"><button instance="' + instance + '" enroll="'+isEnroll+'" type="button" loid="' + loId + '" class="handlelo main_enroll_btn btn-primary btn-lg">'+getLabel(resp)+'</button></div>';
+  return content;
+}
+
+function handleContinueClick() {
+  [...document.querySelectorAll('.handlelo')].forEach(function (item) {
+    item.addEventListener("click", (e) => {
+      
+      if(item.getAttribute('enroll') == 'true'){
+        playerHelp(item);
+      }else{
+        enrollUser(item.getAttribute('loid'),item.getAttribute('instance')).then(response => {
+          if(response?.data?.id){
+            playerHelp(item);
+          }
+          
+        });
+      }
+      
+    });
+
+  });
+
+};
+
+function playerHelp(item){
+  var playerUrl = '';
+  if(item.getAttribute('module')){
+    playerUrl = 'https://learningmanager.adobe.com/app/player?lo_id=' + item.getAttribute('loid') + '&access_token=' + getCookie() + '&module_id=' + item.getAttribute('module');
+  }else{
+    playerUrl = 'https://learningmanager.adobe.com/app/player?lo_id=' + item.getAttribute('loid') + '&access_token=' + getCookie();
+  }
+  
+
+  const parentEl = document.querySelector('.lopage');
+  parentEl.insertAdjacentHTML("afterbegin", '<div style="height: 100vh;width: 100%"><iframe src="' + playerUrl + '" height="100%" width="100%"></iframe></div>');
+  window.addEventListener("message", function closePlayer() {
+    if (event.data === "status:close") {
+      var referrer = document.referrer;
+      console.log('ijijij', referrer);
+      if (referrer) {
+        window.location.href = referrer;
+      }
+    }
+  });
+}
+
+function getTime(secs) {
+  if (secs >= 60) {
+    const mins = Math.floor(secs / 60);
+    const seconds = secs % 60;
+    if (seconds !== 0) {
+      return mins + " mins " + seconds + " seconds";
+    } else return mins + " mins ";
+  } else return secs + " seconds";
+};
+
+function getLabel(inp) {
+
+  if (inp && inp?.included) {
+    switch (inp?.included[0]?.attributes?.state) {
+      case "ENROLLED":
+        return "START";
+      case "STARTED":
+        return "CONTINUE";
+      case "COMPLETED":
+        return "REVISIT";
+    }
+  }  else {
+    return "Start Learning Now";
+  }
+};
